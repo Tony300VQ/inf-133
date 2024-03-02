@@ -11,7 +11,7 @@ dispatcher = SoapDispatcher(
     ns=True,
 )
 def sumaDosNumeros(num1,num2):
-    return "Suma,{}".format(num1+num2)
+    return "La suma es,{}".format(num1+num2)
 def cadenaPalindromo(cadena):
     if(cadena==cadena[::-1]):
         return True
