@@ -11,7 +11,7 @@ estudiantes = [
 ]
 
 class RESTRequestHandler(BaseHTTPRequestHandler):
-    def do_GETI(self):
+    def do_GET(self):
         if self.path == '/lista_estudiantes':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -22,7 +22,7 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode('utf-8'))
-    def do_GET(self):
+    def do_GETI(self):
         if self.path == '/buscar_nombre':
             nombres_estudiantes = [estudiante["nombre"] for estudiante in estudiantes]
             for i in nombres_estudiantes:
@@ -32,6 +32,36 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(nombres_estudiantes).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode('utf-8'))
+    def do_GETO(self):
+        if self.path == '/total_estudiantes':
+            con= len(estudiantes)
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(con).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({"Error": "Ruta no existente"}).encode('utf-8'))
+    def do_GETU(self):
+        if self.path == '/contar_carreras':
+            nombres_carreras = [estudiante["carrera"] for estudiante in estudiantes]
+            conteo_carreras = {}
+            for carrera in nombres_carreras:
+                if carrera in conteo_carreras:
+                    conteo_carreras[carrera] += 1
+                else:
+                    conteo_carreras[carrera] = 1
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(conteo_carreras).encode('utf-8'))
         else:
             self.send_response(404)
             self.send_header('Content-type', 'application/json')
