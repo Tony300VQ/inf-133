@@ -38,7 +38,20 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
         query_params = parse_qs(parsed_path.query)
 
         if parsed_path.path == "/estudiantes":
-            if "nombre" in query_params:
+            if "carrera" in query_params and "apellido" in query_params and "nombre" in query_params:
+                nombre = query_params["nombre"][0]
+                apellido = query_params["apellido"][0]
+                carrera = query_params["carrera"][0]
+                estudiantes_filtrados = [
+                    estudiante
+                    for estudiante in estudiantes
+                    if estudiante["carrera"] == carrera and estudiante["apellido"]==apellido and estudiante["nombre"]==nombre
+                ]
+                if estudiantes_filtrados != []:
+                    self.response_handler(200, estudiantes_filtrados)
+                else:
+                    self.response_handler(204, [])
+            elif "nombre" in query_params:
                 nombre = query_params["nombre"][0]
                 estudiantes_filtrados = [
                     estudiante
@@ -55,19 +68,6 @@ class RESTRequestHandler(BaseHTTPRequestHandler):
                     estudiante
                     for estudiante in estudiantes
                     if estudiante["carrera"] == carrera
-                ]
-                if estudiantes_filtrados != []:
-                    self.response_handler(200, estudiantes_filtrados)
-                else:
-                    self.response_handler(204, [])
-            elif "carrera" in query_params and "apellido" in query_params and "nombre" in query_params:
-                nombre = query_params["nombre"][0]
-                apellido = query_params["apellido"][0]
-                carrera = query_params["carrera"][0]
-                estudiantes_filtrados = [
-                    estudiante
-                    for estudiante in estudiantes
-                    if estudiante["carrera"] == carrera and estudiante["apellido"]==apellido and estudiante["nombre"]==nombre
                 ]
                 if estudiantes_filtrados != []:
                     self.response_handler(200, estudiantes_filtrados)
