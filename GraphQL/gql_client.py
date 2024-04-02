@@ -52,7 +52,7 @@ url = 'http://localhost:8000/graphql'
 
 # Solicitud POST al servidor GraphQL
 print("////////////")
-response = requests.post(url, json={'query': query})
+response = requests.post(url, json={'query': query2})
 print(response.text)
 response = requests.post(url, json={'query': query6})
 print(response.text)

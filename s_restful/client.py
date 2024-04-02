@@ -7,7 +7,7 @@ print(get_response.text)
 # POST 
 ruta_post = url + "estudiantes"
 nuevo_estudiante = {
-    "nombre": "Juanito",
+    "nombre": "Pedrito",
     "apellido": "Pérez",
     "carrera": "Ingeniería Agronomica",
 }

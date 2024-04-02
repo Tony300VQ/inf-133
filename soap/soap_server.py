@@ -12,6 +12,14 @@ dispatcher = SoapDispatcher(
 )
 def sumaDosNumeros(num1,num2):
     return "La suma es,{}".format(num1+num2)
+def sumaRestaNumeros(num1,num2):
+    return "La resta es,{}".format(num1-num2)
+def sumaMultiplicacionNumeros(num1,num2):
+    return "La multiplicacion es,{}".format(num1*num2)
+def sumaDivisionNumeros(num1,num2):
+    if num2!=0:
+        return "La division es,{}".format(num1/num2)
+    return "No se puede dividir entre 0"
 def cadenaPalindromo(cadena):
     if(cadena==cadena[::-1]):
         return True

@@ -5,7 +5,7 @@ from urllib.parse import urlparse, parse_qs
 
 estudiantes = [
     {
-        "id": 1,
+        "id": 100,
         "nombre": "Pedrito",
         "apellido": "García",
         "carrera": "Ingeniería de Sistemas",
