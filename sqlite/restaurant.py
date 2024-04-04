@@ -5,16 +5,18 @@ import sqlite3
 conn = sqlite3.connect("restaurant.db")
 
 # Crear tabla de carreras
-conn.execute(
-    """
-    CREATE TABLE PLATOS
-    (id INTEGER PRIMARY KEY,
-    nombre TEXT NOT NULL,
-    precio FLOAT NOT NULL,
-    categoria INTEGER NOT NULL);
-    """
-)
-
+try:
+    conn.execute(
+        """
+        CREATE TABLE PLATOS
+        (id INTEGER PRIMARY KEY,
+        nombre TEXT NOT NULL,
+        precio FLOAT NOT NULL,
+        categoria INTEGER NOT NULL);
+        """ 
+    )
+except sqlite3.OperationalError:
+    print("Tabla de platos ya existe")
 # Insertar datos de carreras
 conn.execute(
     """
@@ -52,14 +54,16 @@ for row in cursor:
 # (2, 'Licenciatura en Administración', 4)
 
 # Crear tablas de estudiantes
-conn.execute(
-    """
-    CREATE TABLE MESAS
-    (id INTEGER PRIMARY KEY,
-    numero INTEGER NOT NULL);
-    """
-)
-
+try:
+    conn.execute(
+        """
+        CREATE TABLE MESAS
+        (id INTEGER PRIMARY KEY,
+        numero INTEGER NOT NULL);
+        """ 
+    )
+except sqlite3.OperationalError:
+    print("Tabla de platos ya existe")
 # Insertar datos de estudiantes
 conn.execute(
     """
@@ -97,19 +101,21 @@ for row in cursor:
 # (2, 'María', 'Lopez', '1999-08-20')
 
 # Crear tabla de matriculación
-conn.execute(
-    """
-    CREATE TABLE PEDIDOS
-    (id INTEGER PRIMARY KEY,
-    plato_id INTEGER NOT NULL,
-    mesa_id INTEGER NOT NULL,
-    cantidad INTEGER NOT NULL,
-    fecha DATE NOT NULL,
-    FOREIGN KEY (plato_id) REFERENCES PLATOS(id),
-    FOREIGN KEY (mesa_id) REFERENCES MESAS(id));
-    """
-)
-
+try:
+    conn.execute(
+        """
+        CREATE TABLE PEDIDOS
+        (id INTEGER PRIMARY KEY,
+        plato_id INTEGER NOT NULL,
+        mesa_id INTEGER NOT NULL,
+        cantidad INTEGER NOT NULL,
+        fecha DATE NOT NULL,
+        FOREIGN KEY (plato_id) REFERENCES PLATOS(id),
+        FOREIGN KEY (mesa_id) REFERENCES MESAS(id));
+        """
+    )
+except sqlite3.OperationalError:
+    print("Tabla de platos ya existe")
 # Insertar datos de matriculación
 conn.execute(
     """
@@ -147,21 +153,18 @@ cursor = conn.execute(
 )
 for row in cursor:
     print(row)
-
-# MATRICULACION:
-# ('Juan', 'Perez', 'Ingeniería en Informática', '2024-01-15')
-# ('María', 'Lopez', 'Licenciatura en Administración', '2024-01-20')
-# ('Juan', 'Perez', 'Licenciatura en Administración', '2024-01-25')    
-
-# Eliminar una fila de la tabla de matriculación
-print("\nPEDIDOS:")
-cursor = conn.execute(
-    "SELECT * FROM PEDIDOS"
+conn.execute(
+    """
+    UPDATE PLATOS
+    SET precio=9.99
+    WHERE id=2    
+    """
 )
 conn.execute(
     """
-    DELETE FROM PLATOS
-    WHERE id = 4
+    UPDATE PLATOS
+    SET categoria= 'Fusion'
+    WHERE id=3
     """
 )
 conn.execute(
@@ -170,46 +173,6 @@ conn.execute(
     WHERE id=3
     """
 )
-# Listar datos de matriculación
 
-for row in cursor:
-    print(row)
-
-# MATRICULACION:
-# (1, 1, 1, '2024-01-15')
-# (2, 2, 2, '2024-01-20')
-
-# Actualizar una fila de la tabla de matriculación
-conn.execute(
-    """
-    UPDATE PLATOS
-    SET categoria = 'Fusión'
-    WHERE id = 3
-    """
-)
-conn.execute(
-    """
-    UPDATE PLATOS
-    SET precio = 9.99
-    WHERE id = 2
-    """
-)
-# Listar datos de matriculación
-print("\nPLATOS ACTUALIZADOS:")
-cursor = conn.execute(
-    "SELECT * FROM PLATOS"
-)
-for row in cursor:
-    print(row)
-    
-# MATRICULACION:
-# (1, 1, 1, '2024-01-15')
-# (2, 2, 2, '2024-01-30')
-print("\nPEDIDOS ACTUALIZADOS:")
-cursor = conn.execute(
-    "SELECT * FROM PEDIDOS"
-)
-for row in cursor:
-    print(row)
-# Cerrar conexión
+conn.commit()
 conn.close()
