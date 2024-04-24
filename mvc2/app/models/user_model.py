@@ -8,7 +8,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
-    
+
     # Inicializa la clase `User`
     def __init__(self, first_name, last_name):
         self.first_name = first_name
