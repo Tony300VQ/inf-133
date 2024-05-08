@@ -1,16 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
-    <title>MVC</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <title>{{title}}</title>
 </head>
 <body>
-    <h1>MVC</h1>
-    <nav>
-        <a href="{{ url_for('user.registro') }}">Registrar Usuario</a> |
-        <a href="{{ url_for('user.usuarios') }}">Lista de Usuarios</a>
+    <h1 class="title">MVC</h1>
+    <nav  class="breadcrumb" aria-label="breadcrumbs" >
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    {{ title.upper() }}
+                </a>
+                <a class="navbar-item" href="{{ url_for('user.registro') }}">
+                    Registrar Usuario
+                </a>
+                <a class="navbar-item" href="{{ url_for('user.usuarios') }}">
+                    Lista de Usuarios
+                </a>
+            </div>
+        </div>
     </nav>
-    <div>
-        {% block content %}{% endblock %}
+    <div class="columns is-mobile is-centered">
+        <div class="column is-half">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 </body>
 </html>

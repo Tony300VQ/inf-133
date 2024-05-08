@@ -29,8 +29,9 @@ def registro():
         # Obtenemos los datos del formulario
         first_name = request.form["first_name"]
         last_name = request.form["last_name"]
+        password= request.form["password"]
         # Creamos un nuevo usuario
-        user = User(first_name, last_name)
+        user = User(first_name, last_name, password)
         # Guardamos el usuario
         user.save()
         # Redirigimos a la vista de usuarios
@@ -63,9 +64,11 @@ def actualizar(id):
     # Obtenemos los datos del formulario
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
+    password = request.form["password"]
     # Actualizamos los datos del usuario
     user.first_name = first_name
     user.last_name = last_name
+    user.password = password
     # Guardamos los cambios
     user.update()
     return redirect(url_for("user.usuarios"))

@@ -29,3 +29,10 @@ class User(db.Model):
     @staticmethod
     def get_all():
         return User.query.all()
+    @staticmethod
+    def get_by_id(id):
+        return User.query.get(id)
+
+    # Actualiza un usuario en la base de datos
+    def update(self):
+        db.session.commit()
